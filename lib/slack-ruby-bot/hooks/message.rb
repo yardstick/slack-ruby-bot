@@ -6,7 +6,6 @@ module SlackRubyBot
         data.text.strip! if data.text
         result = child_command_classes.detect { |d| d.invoke(client, data) }
         result ||= built_in_command_classes.detect { |d| d.invoke(client, data) }
-        result ||= SlackRubyBot::Commands::Unknown.tap { |d| d.invoke(client, data) }
         result
       end
 
@@ -47,7 +46,7 @@ module SlackRubyBot
       #
       def built_in_command_classes
         command_classes.select do |k|
-          k.name && k.name.starts_with?('SlackRubyBot::Commands::') && k != SlackRubyBot::Commands::Unknown
+          k.name && k.name.starts_with?('SlackRubyBot::Commands::')
         end
       end
     end
